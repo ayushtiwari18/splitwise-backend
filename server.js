@@ -1,5 +1,7 @@
-// Pattern only — you write the full file
+require('dotenv').config();
 const app = require('./app');
+require('./src/models/index');
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
