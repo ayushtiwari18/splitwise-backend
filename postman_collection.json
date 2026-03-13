@@ -1,0 +1,220 @@
+{
+  "info": {
+    "name": "Splitwise Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Ayush\", \"email\": \"ayush@test.com\", \"password\": \"123456\", \"currency\": \"INR\"}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/users",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "users"]
+            }
+          }
+        },
+        {
+          "name": "Get User",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/users/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"newemail@test.com\", \"currency\": \"USD\"}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/users/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "users", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:3000/api/users/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "users", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Expenses",
+      "item": [
+        {
+          "name": "Create Expense",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Dinner\", \"description\": \"Team dinner\", \"amount\": 900, \"currency\": \"INR\", \"date\": \"2026-03-13\", \"paidBy\": 1, \"participants\": [1, 2, 3]}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/expenses",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "expenses"]
+            }
+          }
+        },
+        {
+          "name": "List Expenses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/expenses",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "expenses"]
+            }
+          }
+        },
+        {
+          "name": "Get Expense",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/expenses/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "expenses", "1"]
+            }
+          }
+        },
+        {
+          "name": "Update Expense",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Lunch\", \"amount\": 600}"
+            },
+            "url": {
+              "raw": "http://localhost:3000/api/expenses/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "expenses", "1"]
+            }
+          }
+        },
+        {
+          "name": "Delete Expense",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:3000/api/expenses/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "expenses", "1"]
+            }
+          }
+        },
+        {
+          "name": "Activity Log - By Month",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/expenses/activity/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "expenses", "activity", "1"]
+            }
+          }
+        },
+        {
+          "name": "Activity Log - Custom Date Range",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/expenses/activity/1?startDate=2026-03-01&endDate=2026-03-31",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "expenses", "activity", "1"],
+              "query": [
+                {"key": "startDate", "value": "2026-03-01"},
+                {"key": "endDate", "value": "2026-03-31"}
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Balances",
+      "item": [
+        {
+          "name": "Get All Balances",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/balances",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "balances"]
+            }
+          }
+        },
+        {
+          "name": "Get User Balances",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/api/balances/1",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["api", "balances", "1"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:3000/health",
+              "host": ["localhost"],
+              "port": "3000",
+              "path": ["health"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
