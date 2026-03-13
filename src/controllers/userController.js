@@ -2,12 +2,13 @@ const userService = require('../services/userService');
 
 const createUser = async (req, res) => {
   try {
-    const { name, email } = req.body;
-    if (!name || !email) {
-      return res.status(400).json({ message: 'name and email are required' });
+    const { name, email, password, currency } = req.body;
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: 'name, email and password are required' });
     }
-    const user = await userService.createUser({ name, email });
-    res.status(201).json(user);
+    const user = await userService.createUser({ name, email, password, currency });
+    const { password: _, ...safeUser } = user.toJSON();
+    res.status(201).json(safeUser);
   } catch (err) {
     if (err.name === 'SequelizeUniqueConstraintError') {
       return res.status(409).json({ message: 'email already exists' });

@@ -2,13 +2,13 @@ const expenseService = require('../services/expenseService');
 
 const createExpense = async (req, res) => {
   try {
-    const { description, amount, paidBy, participants } = req.body;
+    const { name, description, amount, currency, date, paidBy, participants } = req.body;
 
-    if (!description || !amount || !paidBy || !participants || !participants.length) {
-      return res.status(400).json({ message: 'description, amount, paidBy and participants are required' });
+    if (!name || !amount || !paidBy || !participants || !participants.length || !date) {
+      return res.status(400).json({ message: 'name, amount, date, paidBy and participants are required' });
     }
 
-    const expense = await expenseService.createExpense({ description, amount, paidBy, participants });
+    const expense = await expenseService.createExpense({ name, description, amount, currency, date, paidBy, participants });
     res.status(201).json(expense);
   } catch (err) {
     res.status(500).json({ message: 'something went wrong' });
@@ -60,4 +60,15 @@ const deleteExpense = async (req, res) => {
   }
 };
 
-module.exports = { createExpense, getExpense, listExpenses, updateExpense, deleteExpense };
+const getActivityLog = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { startDate, endDate } = req.query;
+    const log = await expenseService.getActivityLog(userId, startDate, endDate);
+    res.status(200).json(log);
+  } catch (err) {
+    res.status(500).json({ message: 'something went wrong' });
+  }
+};
+
+module.exports = { createExpense, getExpense, listExpenses, updateExpense, deleteExpense, getActivityLog };

@@ -6,7 +6,9 @@ const createUser = async (data) => {
 };
 
 const getUserById = async (id) => {
-  const user = await User.findByPk(id);
+  const user = await User.findByPk(id, {
+    attributes: { exclude: ['password'] },
+  });
   return user;
 };
 
@@ -14,7 +16,8 @@ const updateUser = async (id, data) => {
   const user = await User.findByPk(id);
   if (!user) return null;
   await user.update(data);
-  return user;
+  const updated = await User.findByPk(id, { attributes: { exclude: ['password'] } });
+  return updated;
 };
 
 const deleteUser = async (id) => {

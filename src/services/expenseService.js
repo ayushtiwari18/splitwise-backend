@@ -1,9 +1,10 @@
 const { Expense, ExpenseParticipant, User } = require('../models');
+const { Op } = require('sequelize');
 
 const createExpense = async (data) => {
-  const { description, amount, paidBy, participants } = data;
+  const { name, description, amount, currency, date, paidBy, participants } = data;
 
-  const expense = await Expense.create({ description, amount, paidBy });
+  const expense = await Expense.create({ name, description, amount, currency, date, paidBy });
 
   const share = parseFloat((amount / participants.length).toFixed(2));
 
@@ -40,6 +41,7 @@ const listExpenses = async () => {
         include: [{ model: User, as: 'user', attributes: ['id', 'name'] }],
       },
     ],
+    order: [['date', 'DESC']],
   });
   return expenses;
 };
@@ -59,4 +61,48 @@ const deleteExpense = async (id) => {
   return true;
 };
 
-module.exports = { createExpense, getExpenseById, listExpenses, updateExpense, deleteExpense };
+const getActivityLog = async (userId, startDate, endDate) => {
+  const now = new Date();
+
+  const firstDayThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+  const firstDayLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const lastDayLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+  const participantExpenses = await ExpenseParticipant.findAll({
+    where: { userId },
+    attributes: ['expenseId'],
+  });
+
+  const expenseIds = participantExpenses.map((p) => p.expenseId);
+
+  const whereClause = { id: { [Op.in]: expenseIds } };
+
+  if (startDate && endDate) {
+    whereClause.date = { [Op.between]: [startDate, endDate] };
+  }
+
+  const expenses = await Expense.findAll({
+    where: whereClause,
+    include: [
+      { model: User, as: 'payer', attributes: ['id', 'name'] },
+      {
+        model: ExpenseParticipant,
+        include: [{ model: User, as: 'user', attributes: ['id', 'name'] }],
+      },
+    ],
+    order: [['date', 'DESC']],
+  });
+
+  if (startDate && endDate) {
+    return { custom: expenses };
+  }
+
+  const thisMonth = expenses.filter((e) => new Date(e.date) >= firstDayThisMonth);
+  const lastMonth = expenses.filter(
+    (e) => new Date(e.date) >= firstDayLastMonth && new Date(e.date) <= lastDayLastMonth
+  );
+
+  return { thisMonth, lastMonth };
+};
+
+module.exports = { createExpense, getExpenseById, listExpenses, updateExpense, deleteExpense, getActivityLog };

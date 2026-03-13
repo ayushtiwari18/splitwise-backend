@@ -14,6 +14,14 @@ const User = sequelize.define('User', {
       isEmail: true,
     },
   },
+  password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  currency: {
+    type: DataTypes.STRING,
+    defaultValue: 'INR',
+  },
 });
 
 module.exports = User;
