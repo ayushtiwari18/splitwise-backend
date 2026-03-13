@@ -1,4 +1,3 @@
-// Pattern only — implement all four yourself
 const { User } = require('../models');
 
 const createUser = async (data) => {
@@ -7,15 +6,22 @@ const createUser = async (data) => {
 };
 
 const getUserById = async (id) => {
-  // use User.findByPk(id)
+  const user = await User.findByPk(id);
+  return user;
 };
 
 const updateUser = async (id, data) => {
-  // find user first, then call user.update(data)
+  const user = await User.findByPk(id);
+  if (!user) return null;
+  await user.update(data);
+  return user;
 };
 
 const deleteUser = async (id) => {
-  // find user first, then call user.destroy()
+  const user = await User.findByPk(id);
+  if (!user) return null;
+  await user.destroy();
+  return true;
 };
 
 module.exports = { createUser, getUserById, updateUser, deleteUser };
