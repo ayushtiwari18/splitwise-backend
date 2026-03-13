@@ -1,15 +1,18 @@
+// Pattern only
 const sequelize = require('../config/database');
+const User = require('./User');
 
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
-    console.log('Database connected');
+    await sequelize.sync({ alter: true }); 
+    console.log('Database connected and synced');
   } catch (err) {
-    console.error('Database connection failed:', err.message);
+    console.error('DB error:', err.message);
     process.exit(1);
   }
 };
 
 connectDB();
 
-module.exports = sequelize;
+module.exports = { sequelize, User };
