@@ -1,0 +1,34 @@
+{
+  "name": "splitwise-backend",
+  "version": "1.0.0",
+  "description": "A Splitwise-like expense splitting backend built with Node.js, Express, Sequelize ORM and MySQL",
+  "main": "server.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushtiwari18/splitwise-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayushtiwari18/splitwise-backend/issues"
+  },
+  "homepage": "https://github.com/ayushtiwari18/splitwise-backend#readme",
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "express": "^4.22.1",
+    "mysql2": "^3.19.1",
+    "sequelize": "^6.37.8",
+    "sqlite3": "^6.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
